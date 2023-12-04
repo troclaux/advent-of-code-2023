@@ -1,10 +1,11 @@
 import * as fs from 'fs';
-const util = require('util')
+// const util = require('util')
 
 const lines: string[] = fs.readFileSync('input.txt', 'utf8').split('\n');
+lines.pop();
 
-function getFirstAndLastNumber(strings: string[]): number[] {
-    const filteredLines: string[] = new Array( strings.length - 1 ).fill('');
+function getNumbersTotalSum(strings: string[]): number {
+    const filteredLines: string[] = new Array( strings.length ).fill('');
     const output: number[] = [];
 
     for (let idx = 0; idx < strings.length; idx++) {
@@ -26,7 +27,8 @@ function getFirstAndLastNumber(strings: string[]): number[] {
         }
         output.push( Number( filteredLines[idx] ) );
     }
-    return output;
+    return output.reduce(( acc, curr ) => acc + curr, 0);
 }
 
-console.log( util.inspect( getFirstAndLastNumber(lines), { maxArrayLength: null } ) );
+// console.log( util.inspect( getNumbersTotalSum(lines), { maxArrayLength: null } ) );
+console.log(getNumbersTotalSum(lines));
