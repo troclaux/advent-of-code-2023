@@ -4,7 +4,7 @@ const util = require('util')
 const lines: string[] = fs.readFileSync('input.txt', 'utf8').split('\n');
 
 function getFirstAndLastNumber(strings: string[]): number[] {
-    const filteredLines: string[] = new Array( strings.length ).fill('');
+    const filteredLines: string[] = new Array( strings.length - 1 ).fill('');
     const output: number[] = [];
 
     for (let idx = 0; idx < strings.length; idx++) {
