@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 // const util = require('util')
 
-const lines: string[] = fs.readFileSync('input.txt', 'utf8').split('\n');
+const lines: string[] = fs.readFileSync('input1.txt', 'utf8').split('\n');
 lines.pop();
 
 function part1(strings: string[]): number {
