@@ -4,7 +4,7 @@ import * as fs from 'fs';
 const lines: string[] = fs.readFileSync('input.txt', 'utf8').split('\n');
 lines.pop();
 
-function getNumbersTotalSum(strings: string[]): number {
+function part1(strings: string[]): number {
     const filteredLines: string[] = new Array( strings.length ).fill('');
     const output: number[] = [];
 
@@ -30,5 +30,5 @@ function getNumbersTotalSum(strings: string[]): number {
     return output.reduce(( acc, curr ) => acc + curr, 0);
 }
 
-// console.log( util.inspect( getNumbersTotalSum(lines), { maxArrayLength: null } ) );
-console.log(getNumbersTotalSum(lines));
+// console.log( util.inspect( part1(lines), { maxArrayLength: null } ) );
+console.log(part1(lines));
