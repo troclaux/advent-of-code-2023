@@ -105,5 +105,5 @@ function part2(games: string[]): number | undefined {
     return powersOfEachGame.reduce( (acc, curr: any) => acc + curr, 0);
 }
 
-part1(input, defaultBag);
-console.log( part2(input) );
+console.log( 'Answer for Part1 of day2:', part1(input, defaultBag) );
+console.log( 'Answer for Part2 of day2:', part2(input) );
