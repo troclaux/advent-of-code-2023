@@ -28,3 +28,10 @@ const [
     left, right,
     downLeft, down, downRight
 ] = coordinates;
+function isSymbolAtCoordinate(col: number, row: number, matrix: string[]) {
+    if (col < 0 || row < 0 || col >= matrix.length || row >= matrix[col].length ) {
+        return false;
+    } else {
+        return isSymbol( matrix[col][row] );
+    }
+}
