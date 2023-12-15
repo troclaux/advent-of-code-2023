@@ -6,3 +6,6 @@ input.pop();
 function isNumber(char: string) {
     return !isNaN(Number(char));
 }
+function isDot(char: string) {
+    return char === '.';
+}
