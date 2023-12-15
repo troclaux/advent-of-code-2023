@@ -9,3 +9,7 @@ function isNumber(char: string) {
 function isDot(char: string) {
     return char === '.';
 }
+
+function isSymbol(char: string) {
+    return !isNumber(char) && !isDot(char);
+}
