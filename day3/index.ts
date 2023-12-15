@@ -6,6 +6,7 @@ input.pop();
 function isNumber(char: string) {
     return !isNaN(Number(char));
 }
+
 function isDot(char: string) {
     return char === '.';
 }
@@ -13,10 +14,12 @@ function isDot(char: string) {
 function isSymbol(char: string) {
     return !isNumber(char) && !isDot(char);
 }
+
 function addCoordinates(col: number, row: number, coordinate: number[]) {
     const result: [number, number] = [ coordinate[0] + col, coordinate[1] + row ];
     return result;
 }
+
 const coordinates: number[][] = [
     [-1, -1], [0, -1], [1, -1],
     [-1, 0], [1, 0],
@@ -28,6 +31,9 @@ const [
     left, right,
     downLeft, down, downRight
 ] = coordinates;
+
+// console.log({ upLeft, up, upRight, left, right, downLeft, down, downRight });
+
 function isSymbolAtCoordinate(col: number, row: number, matrix: string[]) {
     if (col < 0 || row < 0 || col >= matrix.length || row >= matrix[col].length ) {
         return false;
@@ -59,23 +65,27 @@ function part1(engineSchematic: string[]): number {
         isNumberAdjacentToSymbol = false;
         for (let row = 0; row < engineSchematic[col].length; row++) {
 
-            // if ( !isNumber && isNumberAdjacentToSymbol ) {
-            //     isNumberAdjacentToSymbol = false;
-            //     partNumbers.push(Number( currWord ));
-            //     currWord = '';
-            // }
+            if ( !isNumber(engineSchematic[col][row]) ) {
+
+                if ( isNumberAdjacentToSymbol ) {
+                    console.log( { currWord } );
+                    partNumbers.push(Number( currWord ));
+                    isNumberAdjacentToSymbol = false;
+                }
+                currWord = '';
+                isNumberAdjacentToSymbol = false;
+            }
 
             if ( isNumber(engineSchematic[col][row]) ) {
                 if ( hasAdjacentSymbol(col, row, engineSchematic) ) {
                     isNumberAdjacentToSymbol = true;
-                    console.log({ row }, { col }, engineSchematic[col][row]);
                 }
-                // currWord = currWord + engineSchematic[col][row];
-                // console.log( engineSchematic[col][row] );
-                // partNumbers.concat( getNeighbourNumbers ( col, row, engineSchematic ) );
+                currWord = currWord + engineSchematic[col][row];
             }
         }
     }
-    // console.log( partNumbers );
+    console.log( partNumbers );
     return sum;
 }
+
+console.log(part1(input));
