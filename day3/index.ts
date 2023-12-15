@@ -13,3 +13,7 @@ function isDot(char: string) {
 function isSymbol(char: string) {
     return !isNumber(char) && !isDot(char);
 }
+function addCoordinates(col: number, row: number, coordinate: number[]) {
+    const result: [number, number] = [ coordinate[0] + col, coordinate[1] + row ];
+    return result;
+}
