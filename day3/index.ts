@@ -56,7 +56,6 @@ function hasAdjacentSymbol(col: number, row: number, matrix: string[]) {
 function part1(engineSchematic: string[]): number {
 
     let partNumbers: number[] = [];
-    let sum: number = 0;
     let currWord: string = '';
     let isNumberAdjacentToSymbol: boolean = false;
 
@@ -65,10 +64,19 @@ function part1(engineSchematic: string[]): number {
         isNumberAdjacentToSymbol = false;
         for (let row = 0; row < engineSchematic[col].length; row++) {
 
+            // if (isSymbol(engineSchematic[col][row])) {
+            //     continue;
+            // }
+
+            if (row == ( engineSchematic[col].length - 1 ) && isNumber(engineSchematic[col][row]) && isNumberAdjacentToSymbol) {
+                currWord = currWord + engineSchematic[col][row];
+                partNumbers.push(Number(currWord));
+                continue;
+            }
+
             if ( !isNumber(engineSchematic[col][row]) ) {
 
                 if ( isNumberAdjacentToSymbol ) {
-                    console.log( { currWord } );
                     partNumbers.push(Number( currWord ));
                     isNumberAdjacentToSymbol = false;
                 }
@@ -84,8 +92,9 @@ function part1(engineSchematic: string[]): number {
             }
         }
     }
-    console.log( partNumbers );
-    return sum;
+    console.dir(partNumbers, {'maxArrayLength': null});
+    console.log( partNumbers.length );
+    return partNumbers.reduce( (acc, curr) => acc = acc + curr, 0);
 }
 
 console.log(part1(input));
