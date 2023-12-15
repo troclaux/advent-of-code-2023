@@ -46,3 +46,36 @@ function hasAdjacentSymbol(col: number, row: number, matrix: string[]) {
     return false;
 }
 
+
+function part1(engineSchematic: string[]): number {
+
+    let partNumbers: number[] = [];
+    let sum: number = 0;
+    let currWord: string = '';
+    let isNumberAdjacentToSymbol: boolean = false;
+
+    for (let col = 0; col < engineSchematic.length; col++) {
+        currWord = '';
+        isNumberAdjacentToSymbol = false;
+        for (let row = 0; row < engineSchematic[col].length; row++) {
+
+            // if ( !isNumber && isNumberAdjacentToSymbol ) {
+            //     isNumberAdjacentToSymbol = false;
+            //     partNumbers.push(Number( currWord ));
+            //     currWord = '';
+            // }
+
+            if ( isNumber(engineSchematic[col][row]) ) {
+                if ( hasAdjacentSymbol(col, row, engineSchematic) ) {
+                    isNumberAdjacentToSymbol = true;
+                    console.log({ row }, { col }, engineSchematic[col][row]);
+                }
+                // currWord = currWord + engineSchematic[col][row];
+                // console.log( engineSchematic[col][row] );
+                // partNumbers.concat( getNeighbourNumbers ( col, row, engineSchematic ) );
+            }
+        }
+    }
+    // console.log( partNumbers );
+    return sum;
+}
