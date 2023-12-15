@@ -35,3 +35,14 @@ function isSymbolAtCoordinate(col: number, row: number, matrix: string[]) {
         return isSymbol( matrix[col][row] );
     }
 }
+
+function hasAdjacentSymbol(col: number, row: number, matrix: string[]) {
+
+    for (const coordinate of coordinates) {
+        if (isSymbolAtCoordinate( ...addCoordinates(col, row, coordinate), matrix) ) {
+            return true;
+        }
+    }
+    return false;
+}
+
