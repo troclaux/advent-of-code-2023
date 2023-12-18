@@ -107,7 +107,7 @@ function part1(engineSchematic: string[]): number {
             }
         }
     }
-    console.dir(partNumbers, {'maxArrayLength': null});
+    // console.dir(partNumbers, {'maxArrayLength': null});
     return partNumbers.reduce( (acc, curr) => acc = acc + curr, 0);
 }
 
@@ -180,13 +180,17 @@ function part2(engineSchematic: string[]): number {
         }
     }
 
-    console.log( gearMap );
-    // console.dir(partNumbers, {'maxArrayLength': null});
-    // return partNumbers.reduce( (acc, curr) => acc = acc + curr, 0);
-    return 0;
+    const mapValues = [...gearMap.values()];
+
+    let result: number = 0;
+
+    for (let value of mapValues) {
+        if (value.length == 2) {
+            result += value[0] * value[1]
+        }
+    }
+    return result;
 }
 
-// console.log(part1(input));
-console.log(part2(input));
-
-
+console.log('part 1 solution:', part1(input));
+console.log('part 2 solution:', part2(input));
