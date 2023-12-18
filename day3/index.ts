@@ -3,22 +3,8 @@ import * as fs from 'fs';
 const input: string[] = fs.readFileSync('input1.txt', 'utf8').split('\n');
 input.pop();
 
-function isNumber(char: string) {
-    return !isNaN(Number(char));
-}
-
-function isDot(char: string) {
-    return char === '.';
-}
-
-function isSymbol(char: string) {
-    return !isNumber(char) && !isDot(char);
-}
-
-function addCoordinates(col: number, row: number, coordinate: number[]) {
-    const result: [number, number] = [ coordinate[0] + col, coordinate[1] + row ];
-    return result;
-}
+const chars1: string = '&+-#@$*/%=';
+const chars2: string = '*';
 
 const coordinates: number[][] = [
     [-1, -1], [0, -1], [1, -1],
@@ -34,18 +20,35 @@ const [
 
 // console.log({ upLeft, up, upRight, left, right, downLeft, down, downRight });
 
-function isSymbolAtCoordinate(col: number, row: number, matrix: string[]) {
+function isNumber(char: string) {
+    return !isNaN(Number(char));
+}
+
+function isDot(char: string) {
+    return char === '.';
+}
+
+function isSymbol(char: string, symbols: string) {
+    return symbols.includes(char);
+}
+
+function addCoordinates(col: number, row: number, coordinate: number[]) {
+    const result: [number, number] = [ coordinate[0] + col, coordinate[1] + row ];
+    return result;
+}
+
+function isSymbolAtCoordinate(col: number, row: number, matrix: string[], symbols: string) {
     if (col < 0 || row < 0 || col >= matrix.length || row >= matrix[col].length ) {
         return false;
     } else {
-        return isSymbol( matrix[col][row] );
+        return isSymbol( matrix[col][row], symbols);
     }
 }
 
-function hasAdjacentSymbol(col: number, row: number, matrix: string[]) {
+function hasAdjacentSymbol(col: number, row: number, matrix: string[], symbols: string) {
 
     for (const coordinate of coordinates) {
-        if (isSymbolAtCoordinate( ...addCoordinates(col, row, coordinate), matrix) ) {
+        if (isSymbolAtCoordinate( ...addCoordinates(col, row, coordinate), matrix, symbols) ) {
             return true;
         }
     }
@@ -85,7 +88,7 @@ function part1(engineSchematic: string[]): number {
             }
 
             if ( isNumber(engineSchematic[col][row]) ) {
-                if ( hasAdjacentSymbol(col, row, engineSchematic) ) {
+                if ( hasAdjacentSymbol(col, row, engineSchematic, chars1) ) {
                     isNumberAdjacentToSymbol = true;
                 }
                 currWord = currWord + engineSchematic[col][row];
@@ -93,8 +96,8 @@ function part1(engineSchematic: string[]): number {
         }
     }
     console.dir(partNumbers, {'maxArrayLength': null});
-    console.log( partNumbers.length );
     return partNumbers.reduce( (acc, curr) => acc = acc + curr, 0);
 }
 
 console.log(part1(input));
+
