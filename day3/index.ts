@@ -55,6 +55,18 @@ function hasAdjacentSymbol(col: number, row: number, matrix: string[], symbols: 
     return false;
 }
 
+function getAdjacentSymbolCoordinates(col: number, row: number, matrix: string[], symbols: string) {
+
+    let curr:[ number, number ] = [ -1, -1 ];
+    for (const coordinate of coordinates) {
+        curr = addCoordinates(col, row, coordinate);
+        if (isSymbolAtCoordinate( ...curr, matrix, symbols) ) {
+            return curr;
+        }
+    }
+    return [-1, -1];
+}
+
 
 function part1(engineSchematic: string[]): number {
 
@@ -99,5 +111,80 @@ function part1(engineSchematic: string[]): number {
     return partNumbers.reduce( (acc, curr) => acc = acc + curr, 0);
 }
 
-console.log(part1(input));
+function saveGear(col: number, row: number, num: number, map: Map<string, number[]>) {
+    const key = JSON.stringify([col, row]);
+
+    if (map.has(key)) {
+        const array: number[] = map.get(key) || [];
+        array.push(num);
+        map.set(key, array);
+    } else {
+        map.set(key, [num]);
+    }
+}
+
+function part2(engineSchematic: string[]): number {
+
+    let partNumbers: number[] = [];
+    let currWord: string = '';
+    let currRow: number = -1;
+    let currCol: number = -1;
+    let currSymbolCoordinates: number[] = [0, 0];
+    let isNumberAdjacentToSymbol: boolean = false;
+    let gearMap: Map<string, number[]> = new Map();
+
+    for (let col = 0; col < engineSchematic.length; col++) {
+        currWord = '';
+        currSymbolCoordinates = [-1, -1];
+        isNumberAdjacentToSymbol = false;
+        for (let row = 0; row < engineSchematic[col].length; row++) {
+
+            // if (isSymbol(engineSchematic[col][row])) {
+            //     continue;
+            // }
+
+            if (row == ( engineSchematic[col].length - 1 ) && isNumber(engineSchematic[col][row]) && isNumberAdjacentToSymbol) {
+                currWord = currWord + engineSchematic[col][row];
+                partNumbers.push(Number(currWord));
+                currSymbolCoordinates = getAdjacentSymbolCoordinates(col, row, engineSchematic, chars2);
+                currCol = currSymbolCoordinates[0];
+                currRow = currSymbolCoordinates[1];
+                saveGear( currRow, currCol , Number(currWord), gearMap);
+                currSymbolCoordinates = [-1, -1];
+                continue;
+            }
+
+            if ( !isNumber(engineSchematic[col][row]) ) {
+
+                if ( isNumberAdjacentToSymbol ) {
+                    partNumbers.push(Number( currWord ));
+                    currCol = currSymbolCoordinates[0];
+                    currRow = currSymbolCoordinates[1];
+                    saveGear( currRow, currCol , Number(currWord), gearMap);
+                    currSymbolCoordinates = [-1, -1];
+                    isNumberAdjacentToSymbol = false;
+                }
+                currWord = '';
+                isNumberAdjacentToSymbol = false;
+            }
+
+            if ( isNumber(engineSchematic[col][row]) ) {
+                if ( hasAdjacentSymbol(col, row, engineSchematic, chars2) ) {
+                    currSymbolCoordinates = getAdjacentSymbolCoordinates(col, row, engineSchematic, chars2);
+                    isNumberAdjacentToSymbol = true;
+                }
+                currWord = currWord + engineSchematic[col][row];
+            }
+        }
+    }
+
+    console.log( gearMap );
+    // console.dir(partNumbers, {'maxArrayLength': null});
+    // return partNumbers.reduce( (acc, curr) => acc = acc + curr, 0);
+    return 0;
+}
+
+// console.log(part1(input));
+console.log(part2(input));
+
 
