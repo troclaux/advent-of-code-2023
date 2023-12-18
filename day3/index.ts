@@ -147,10 +147,12 @@ function part2(engineSchematic: string[]): number {
                 currWord = currWord + engineSchematic[col][row];
                 partNumbers.push(Number(currWord));
                 currSymbolCoordinates = getAdjacentSymbolCoordinates(col, row, engineSchematic, chars2);
+                if (currSymbolCoordinates[0] == -1 && currSymbolCoordinates[1] == -1 ) {
+                    currSymbolCoordinates = getAdjacentSymbolCoordinates(col, row - 2, engineSchematic, chars2);
+                }
                 currCol = currSymbolCoordinates[0];
                 currRow = currSymbolCoordinates[1];
                 saveGear( currRow, currCol , Number(currWord), gearMap);
-                currSymbolCoordinates = [-1, -1];
                 continue;
             }
 
@@ -161,10 +163,10 @@ function part2(engineSchematic: string[]): number {
                     currCol = currSymbolCoordinates[0];
                     currRow = currSymbolCoordinates[1];
                     saveGear( currRow, currCol , Number(currWord), gearMap);
-                    currSymbolCoordinates = [-1, -1];
                     isNumberAdjacentToSymbol = false;
                 }
                 currWord = '';
+                currSymbolCoordinates = [-1, -1];
                 isNumberAdjacentToSymbol = false;
             }
 
