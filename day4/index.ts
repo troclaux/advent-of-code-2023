@@ -14,7 +14,7 @@ function getNumberCountMap(nums: number[]) {
 
 
 function part1(cards: string[]) {
-    let sum: number = 0;
+    let points: number = 0;
     let cardId: number = 1;
     let cardPoints: number[] = [];
 
@@ -43,15 +43,18 @@ function part1(cards: string[]) {
             }
         }
 
-        console.log( cardId, winningNumbers, numbers, matches );
+        if ( matchCount > 0 ) {
+            points += 2**(matchCount - 1)
+        }
+
+        // console.log( cardId, winningNumbers, numbers, matches );
         cardPoints.push(matchCount);
         cardId++;
     }
     
-    return cardPoints;
+    return points;
 }
 
 // console.dir(partNumbers, {'maxArrayLength': null});
 
-// console.log('part 1 solution:', part1(input));
-console.log( part1(input) );
+console.log('part 1 solution:', part1(input));
